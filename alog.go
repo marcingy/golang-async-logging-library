@@ -40,11 +40,11 @@ func New(w io.Writer) *Alog {
 // the caller from being blocked.
 func (al Alog) Start() {
 	for {
-		go func(al Alog) {
-			var data string
-			data  = <- al.msgCh
+		var data string
+		data  = <- al.msgCh
+		go func(al Alog, data string) {
 			al.write(data, nil)
-		}(al)
+		}(al, data)
 	}
 }
 
